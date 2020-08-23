@@ -16,16 +16,16 @@ public class CardManager {
             cardManagerUI.printMainMenu();
             int menuNumber = cardManagerUI.getMenuNumber();
             switch(menuNumber){
-                case 1 :
+                case 1 :    // 명함 입력
                     BusinessCard businessCard = cardManagerUI.inputBusinessCard();
                     businessCardManagerDao.addBusinessCard(businessCard);
                     break;
-                case 2 :
+                case 2 :    // 명함 검색
                     String searchKeyword = cardManagerUI.getSearchKeyword();
                     List<BusinessCard> businessCardList = businessCardManagerDao.searchBusinessCard(searchKeyword);
                     cardManagerUI.printBusinessCards(businessCardList);
                     break;
-                case 3 :
+                case 3 :    // 종료
                     cardManagerUI.printExitMessage();
                     break while_loop;
                 default:
