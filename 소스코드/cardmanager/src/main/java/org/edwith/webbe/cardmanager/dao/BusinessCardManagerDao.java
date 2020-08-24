@@ -10,6 +10,7 @@ public class BusinessCardManagerDao {
     }
 
     public BusinessCard addBusinessCard(BusinessCard businessCard){
-	// 구현하세요.
+
+
     }
 }
