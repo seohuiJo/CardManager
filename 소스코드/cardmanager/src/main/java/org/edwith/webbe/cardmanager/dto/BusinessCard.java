@@ -8,6 +8,13 @@ public class BusinessCard {
     private String companyName;
     private Date createDate;
 
+    public BusinessCard(String name, String phone, String companyName, Date createDate) {
+        this.name = name;
+        this.phone = phone;
+        this.companyName = companyName;
+        this.createDate = createDate;
+    }
+
     public BusinessCard(String name, String phone, String companyName) {
         this.name = name;
         this.phone = phone;
