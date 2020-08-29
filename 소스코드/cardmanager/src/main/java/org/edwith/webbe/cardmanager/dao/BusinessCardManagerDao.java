@@ -6,6 +6,8 @@ import org.edwith.webbe.cardmanager.dto.BusinessCard;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+
 
 public class BusinessCardManagerDao {
     private static String dburl="jdbc:mysql://localhost:3306/CardManager";
@@ -41,8 +43,30 @@ public class BusinessCardManagerDao {
         return cards;
     }
 
-    public BusinessCard addBusinessCard(BusinessCard businessCard){
-    // mysql workbench 설치
-        return null;
+    public int addBusinessCard(BusinessCard businessCard){
+        int insertCount=0;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        String sql="INSERT INTO BUSINESS_CARD VALUES(?,?,?,?)";
+
+        try {
+            Connection conn=DriverManager.getConnection(dburl, dbUser, dbpasswd);
+            PreparedStatement ps=conn.prepareStatement(sql);
+
+            ps.setString(1, businessCard.getName());
+            ps.setString(2, businessCard.getPhone());
+            ps.setString(3, businessCard.getCompanyName());
+            ps.setDate(4, (java.sql.Date) businessCard.getCreateDate());
+
+            insertCount=ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return insertCount;
     }
 }
