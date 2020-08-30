@@ -10,9 +10,9 @@ import java.util.Date;
 
 
 public class BusinessCardManagerDao {
-    private static String dburl="jdbc:mysql://localhost:3306/CardManager";
-    private static String dbUser="root";
-    private static String dbpasswd="csb7256!";
+    private static String dburl="jdbc:mysql://localhost:3306/CardManager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static String dbUser="duck";
+    private static String dbpasswd="duck";
     public List<BusinessCard> searchBusinessCard(String keyword) {
         List<BusinessCard> cards=new ArrayList<>();
         Connection conn=null;
@@ -22,9 +22,8 @@ public class BusinessCardManagerDao {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn= DriverManager.getConnection(dburl, dbUser, dbpasswd);
-            String sql="SELECT * FROM BUSINESS_CARD WHERE NAME LIKE %?%";
+            String sql="SELECT * FROM BUSINESS_CARD WHERE NAME LIKE '%"+keyword+"%'";
             ps=conn.prepareStatement(sql);
-            ps.setString(1, keyword);
             rs=ps.executeQuery();
 
             while(rs.next()){
@@ -51,7 +50,7 @@ public class BusinessCardManagerDao {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        String sql="INSERT INTO BUSINESS_CARD VALUES(?,?,?,?)";
+        String sql="INSERT INTO BUSINESS_CARD VALUES(?,?,?,SYSDATE())";
 
         try {
             Connection conn=DriverManager.getConnection(dburl, dbUser, dbpasswd);
@@ -60,7 +59,6 @@ public class BusinessCardManagerDao {
             ps.setString(1, businessCard.getName());
             ps.setString(2, businessCard.getPhone());
             ps.setString(3, businessCard.getCompanyName());
-            ps.setDate(4, (java.sql.Date) businessCard.getCreateDate());
 
             insertCount=ps.executeUpdate();
         } catch (SQLException throwables) {
